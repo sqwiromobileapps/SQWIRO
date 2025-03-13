@@ -1,0 +1,37 @@
+{
+  "graphQLErrors": [],
+  "clientErrors": [],
+  "networkError": {
+    "message": "Request failed with status code 500",
+    "name": "Error",
+    "stack": "createError@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:308711:26\nsettle@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:308701:25\nonloadend@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:308591:15\ndispatchEvent@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:35468:31\nsetReadyState@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:34610:29\n__didCompleteResponse@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:34408:29\nemit@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:2688:42\n__callFunction@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:3525:36\n@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:3253:31\n__guard@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:3479:15\ncallFunctionReturnFlushedQueue@http://localhost:8081/index.bundle?platform=ios&dev=true&minify=false&modulesOnly=false&runModule=true&app=app.jhela.org:3252:21\ncallFunctionReturnFlushedQueue@[native code]",
+    "config": {
+      "url": "http://172.20.10.3:1447/api/gql/walletgql",
+      "method": "post",
+      "data": "{\"variables\":{\"paramsfind\":{}},\"query\":\"query ($paramsfind: BankModel_find_Params) {\\n  Bank {\\n    find(params: $paramsfind) {\\n      _document\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\"}",
+      "headers": {
+        "Accept": "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        "prxy": "no-proxy",
+        "authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOnsiaWQiOiI0OTc0Mzg4IiwiTG9jYXRpb24iOnt9LCJBZGRyZXNzIjp7fSwiUHVzaFRva2VuIjoiIiwiQXBwU2Vzc2lvbklkIjoiMkU4NUNCNDktMjMwMS00RUQ0LUJGQTYtNkI2NkFBQjI2MURFIiwiQXBwUGxhdGZvcm0iOnsiaW9zIjp7ImJ1aWxkTnVtYmVyIjpudWxsLCJtb2RlbCI6ImlQaG9uZSBYciIsInBsYXRmb3JtIjoiaVBob25lMTEsOCIsInN5c3RlbVZlcnNpb24iOiIxMy43IiwidXNlckludGVyZmFjZUlkaW9tIjoiaGFuZHNldCJ9fSwiQXBwT3RhVmVyc2lvbiI6IjEuMC4xIiwiQXBwSW5zdGFsbGF0aW9uSWQiOiJFMzE3RDJGMy01MTJCLTRBNkQtQUZFRS00NUY4NzY2QTRBMzkiLCJQaW5BY3RpdmF0ZWQiOnRydWUsIm90cCI6IiQyYSQxMCRrUFVvYS5HaFNpRUhnMU1nWlNsbXFlRHEuMTVTYzhUdS5mMGhnWEgyaGhjOXYzeXFzR2RwUyIsInBpbmFjdGl2YXRlZCI6dHJ1ZSwicGluIjoiJDJhJDEwJERhbkJ5YS5aM2FNVTBwSjBRVnBwL09rMEJ0U01YZmRZUnNlSWNmZlZFR0kyMlE0WWpHSnVlIiwiY3JlYXRlZEF0IjoxNTgwMjI4MDQyNDM2LCJ1cGRhdGVkQXQiOjE2NjcyNTEzNzYyMTYsIl9pZCI6InVzZXIvNDk3NDM4OCIsIk5hbWUiOiJHYWl0aG8gQmVybmFyZCBLIiwiRW1haWwiOiJnYWl0aG9iZW5AZ21haWwuY29tIiwiUGhvbmUiOiIrMjU0NzI0NzUwNDUyIiwiVXNlclR5cGUiOlsiTWVtYmVyIiwiQWRtaW4iXSwiVXNlclJvbGVzIjpbXSwiUElOIjoiJDJhJDEwJDlRclVDZmF2Z200UWhmUEVaOGtuM2UzTUdycjdza3hRS1oyeHVHMjE1ZC84SG1BRzZTWk1PIiwiUHJvZmlsZVBpY3R1cmUiOnt9LCJPdHBEYXRlVGltZSI6MTY2NzIxNDU2MjMzOCwiU3RhdHVzIjoiQUNUSVZFIiwiRGVmYXVsdEFjY291bnQiOnsiQWNjb3VudE5hbWUiOiJHYWl0aG8gQmVybmFyZCBLIiwiQWNjb3VudE5vIjoiMjEwNjA0MzM3MyIsIkNvdW50cnkiOnsiQ29uc3RpdHVlbmN5IjoiUk9ZU0FNQlUiLCJDb3VudHJ5IjoiS2VueWEiLCJDb3VudHJ5Q29kZSI6IktFIiwiQ291bnR5IjoiIiwiQ3VycmVuY3kiOiJLRVMiLCJXYXJkIjoiUk9ZU0FNQlUifSwiQ3VycmVuY3kiOiJLRVMiLCJQaG9uZSI6IisyNTQ3MjQ3NTA0NTIiLCJfaWQiOiJtZW1iZXIvNDk3NDM4OCIsImlkIjoiNDk3NDM4OCJ9fSwiaWF0IjoxNjY3MjgyMDQ0MzY3LCJleHAiOjE2Njk4NzQwNDQzNjd9.mQJvqL1zR2JpeZyDqV2jguGMPsAso7sCLVfK_87Vlu0",
+        "userid": "4974388",
+        "username": "Gaitho Bernard K",
+        "email": "gaithoben@gmail.com",
+        "phone": "+254724750452"
+      },
+      "transformRequest": [null],
+      "transformResponse": [null],
+      "timeout": 0,
+      "xsrfCookieName": "XSRF-TOKEN",
+      "xsrfHeaderName": "X-XSRF-TOKEN",
+      "maxContentLength": -1,
+      "maxBodyLength": -1,
+      "transitional": {
+        "silentJSONParsing": true,
+        "forcedJSONParsing": true,
+        "clarifyTimeoutError": false
+      }
+    }
+  },
+  "message": "Request failed with status code 500"
+}

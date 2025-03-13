@@ -1,0 +1,68 @@
+{
+  "name": "SQWIRO",
+  "platforms": ["ios", "android"],
+  "icon": "./@sqwiromobile/app/assets/images/logoicon.png",
+  "splash": {
+    "image": "./@sqwiromobile/app/assets/images/splash.png",
+    "resizeMode": "cover",
+    "backgroundColor": "#FDE3D7"
+  },
+  "expo": {
+    "name": "SQWIRO",
+    "slug": "SQWIRO",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./@sqwiromobile/app/assets/images/logoicon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
+    "android": {
+      "icon": "./@sqwiromobile/app/assets/images/logoicon.png",
+      "package": "com.sqwiro.cloud",
+      "adaptiveIcon": {
+        "backgroundColor": "#FDE3D7"
+      },
+      "splash": {
+        "image": "./@sqwiromobile/app/assets/images/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#FDE3D7"
+      }
+    },
+    "ios": {
+      "icon": "./@sqwiromobile/app/assets/images/logoicon.png",
+      "bundleIdentifier": "com.sqwiro.cloud",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera and image gallery to update profile images and upload documents/images.",
+        "NSMicrophoneUsageDescription": "This app uses the audio device to record short vides that can be uploaded to profiles for describing certain questions",
+        "NSContactsUsageDescription": "This app uses the phone contacts to help user easily select a contact from contacts list",
+        "NSPhotoLibraryUsageDescription": "This app uses the camera and image gallery to update profile images and upload documents/images.",
+        "NSLocationWhenInUseUsageDescription": "This app uses location to authenticate that users are indeed in the location they claim to be ",
+        "NSPrivacyAccessedAPICategoryFileTimestamp": "The app uses the file timestamp to determine the time the file was last modified",
+        "NSPrivacyAccessedAPICategoryUserDefaults": "The app uses the user defaults to store user data for personalization",
+        "NSPrivacyAccessedAPICategorySystemBootTime": "The app may use the system boot time to determine the time the app was last used",
+        "NSPrivacyAccessedAPICategoryDiskSpace": "The app uses the file system to store user data and images. Disk information may be required to show user how much space is available"
+      },
+      "splash": {
+        "image": "./@sqwiromobile/app/assets/images/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#FDE3D7"
+      }
+    },
+    "runtimeVersion": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "35513441-3f4b-403c-97ce-4e5929a629c1"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/35513441-3f4b-403c-97ce-4e5929a629c1",
+      "requestHeaders": {
+        "expo-runtime-version": "1.0.0",
+        "expo-channel-name": "sdk48"
+      }
+    }
+  }
+}

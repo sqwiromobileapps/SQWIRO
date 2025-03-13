@@ -1,0 +1,41 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "jsx": "react",
+    "allowJs": true,
+    "checkJs": false,
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "typeRoots": [
+      "typings",
+      "node_modules/@types",
+      "node_modules/@expocraft-icons",
+      "node_modules/@expocraft/cs50-fingerprints/typescript"
+    ],
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "strict": false,
+    "paths": {
+      "react": ["./node_modules/@types/react"],
+      "@cloudhubke/app": ["./@cloudhubke/app"],
+      "@cloudhubke/appcore": ["./@cloudhubke/appcore"],
+      "@cloudhubke/labfoxx": ["./@cloudhubke/labfoxx"]
+    }
+  },
+  "include": ["**/*"],
+  "exclude": [
+    ".git",
+    ".app-cache",
+    ".npm",
+    ".npm-tmp",
+    "dist",
+    "dist*",
+    "node_modules",
+    "subfolder/dist",
+    "subfolder/node_modules",
+    "**/dist/*",
+    "**/node_modules/*",
+    "src/**/*.spec.ts"
+  ]
+}

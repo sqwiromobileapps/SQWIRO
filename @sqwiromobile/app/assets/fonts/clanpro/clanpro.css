@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'clanpro-book';
+  src: url(./clanpro-book.ttf) format('truetype');
+  font-style: normal;
+}
+@font-face {
+  font-family: 'clanpro-thin';
+  src: url(./clanpro-thin.ttf) format('truetype');
+  font-style: normal;
+}
+@font-face {
+  font-family: 'clanpro-black';
+  src: url(./clanpro-black.ttf) format('truetype');
+  font-style: normal;
+}

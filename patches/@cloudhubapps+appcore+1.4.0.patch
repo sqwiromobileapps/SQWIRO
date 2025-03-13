@@ -1,0 +1,330 @@
+diff --git a/node_modules/@cloudhubapps/appcore/src/.DS_Store b/node_modules/@cloudhubapps/appcore/src/.DS_Store
+new file mode 100644
+index 0000000..0a31de5
+Binary files /dev/null and b/node_modules/@cloudhubapps/appcore/src/.DS_Store differ
+diff --git a/node_modules/@cloudhubapps/appcore/src/auth/.DS_Store b/node_modules/@cloudhubapps/appcore/src/auth/.DS_Store
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@cloudhubapps/appcore/src/auth/MerchantCard.tsx b/node_modules/@cloudhubapps/appcore/src/auth/MerchantCard.tsx
+index ef71c22..dca4722 100644
+--- a/node_modules/@cloudhubapps/appcore/src/auth/MerchantCard.tsx
++++ b/node_modules/@cloudhubapps/appcore/src/auth/MerchantCard.tsx
+@@ -68,6 +68,18 @@ const MerchantCard = ({
+       .toJson();
+ 
+     if (data) {
++      dispatch((state) => ({
++        authContext: {
++          ...state.authContext,
++          currentUser: {
++            ...state.authContext.currentUser,
++            Name: data.Name,
++            Email: data.Email,
++            Phone: data.Phone,
++          },
++        },
++      }));
++
+       authNavigator.navigate('OtpScreen');
+     }
+   };
+diff --git a/node_modules/@cloudhubapps/appcore/src/auth/registration/.DS_Store b/node_modules/@cloudhubapps/appcore/src/auth/registration/.DS_Store
+new file mode 100644
+index 0000000..ca0885e
+Binary files /dev/null and b/node_modules/@cloudhubapps/appcore/src/auth/registration/.DS_Store differ
+diff --git a/node_modules/@cloudhubapps/appcore/src/auth/registration/PhoneScreenStep.tsx b/node_modules/@cloudhubapps/appcore/src/auth/registration/PhoneScreenStep.tsx
+index 0ed688d..f6cd992 100644
+--- a/node_modules/@cloudhubapps/appcore/src/auth/registration/PhoneScreenStep.tsx
++++ b/node_modules/@cloudhubapps/appcore/src/auth/registration/PhoneScreenStep.tsx
+@@ -5,6 +5,7 @@ import {
+   PhoneInput,
+   ProgressCircle,
+   IconButton,
++  Field,
+ } from '@expocraft/core';
+ import Alert from '@expocraft/core/lib/Alert';
+ import useGraphql, { RegistrationProps } from '@cloudhub-ux/graphql';
+@@ -18,7 +19,7 @@ import INITIAL_STATE from '@cloudhubke/app/context/INITIAL_STATE';
+ const PhoneScreenStep = ({
+   onNext,
+   onUpdate = () => {},
+-  values: { Phone },
++  values,
+   actionButtons: ActionButtons,
+ }: any) => {
+   const { colors, sizes, Images } = useAppTheme();
+@@ -34,7 +35,6 @@ const PhoneScreenStep = ({
+ 
+   const { registration, currentUser, dispatch, CONFIG } = useAuthentication();
+   const { authNavigator } = useMerchantAppNavigation();
+-
+   const [phone, setPhone] = React.useState(currentUser.Phone);
+ 
+   const [validphone, setValidPhone] = React.useState('');
+@@ -142,10 +142,11 @@ const PhoneScreenStep = ({
+           </Text>
+         </Block>
+         <Block flex={false}>
+-          <PhoneInput
+-            value={phone}
++          <Field
++            label=""
++            name="Phone"
++            component={PhoneInput}
+             onPhoneChanged={onPhoneChanged}
+-            isformcontrol
+           />
+         </Block>
+       </Block>
+diff --git a/node_modules/@cloudhubapps/appcore/src/auth/registration/RegistrationWizard.tsx b/node_modules/@cloudhubapps/appcore/src/auth/registration/RegistrationWizard.tsx
+index ef88054..c4d3964 100644
+--- a/node_modules/@cloudhubapps/appcore/src/auth/registration/RegistrationWizard.tsx
++++ b/node_modules/@cloudhubapps/appcore/src/auth/registration/RegistrationWizard.tsx
+@@ -40,9 +40,7 @@ const RegitrationWizard = ({
+   const { authNavigator } = useMerchantAppNavigation();
+ 
+   const saveRegistration = async ({ values, onNext }) => {
+-    const data = await Registration({
+-      merchantcode: '',
+-    })
++    const data = await Registration()
+       .save({
+         ...registration,
+         ...values,
+diff --git a/node_modules/@cloudhubapps/appcore/src/auth/registration/SaveNationalId.tsx b/node_modules/@cloudhubapps/appcore/src/auth/registration/SaveNationalId.tsx
+index 899d3b1..0b56937 100644
+--- a/node_modules/@cloudhubapps/appcore/src/auth/registration/SaveNationalId.tsx
++++ b/node_modules/@cloudhubapps/appcore/src/auth/registration/SaveNationalId.tsx
+@@ -26,9 +26,7 @@ const SaveNationalId = ({
+ }) => {
+   const { Registration, errors, setErrors, loadingModels } = useGraphql();
+   const saveRegistration = async () => {
+-    const data = await Registration({
+-      merchantcode: '',
+-    })
++    const data = await Registration()
+       .save({
+         ...values,
+       })
+diff --git a/node_modules/@cloudhubapps/appcore/src/auth/registration/ValidatePhone.tsx b/node_modules/@cloudhubapps/appcore/src/auth/registration/ValidatePhone.tsx
+index d0fa97e..a3d4c1c 100644
+--- a/node_modules/@cloudhubapps/appcore/src/auth/registration/ValidatePhone.tsx
++++ b/node_modules/@cloudhubapps/appcore/src/auth/registration/ValidatePhone.tsx
+@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
+ import useGraphql from '@cloudhub-ux/graphql';
+ import useAuthentication from '../context/useAuthentication';
+ import { MaterialIcons } from '@expo/vector-icons';
++import getConfig from '@cloudhubke/app/config/getConfig';
+ 
+ const ValidatePhone = ({
+   onNext,
+@@ -26,7 +27,7 @@ const ValidatePhone = ({
+   const [remainingSeconds, setRemainingSeconds] = React.useState(0);
+ 
+   useInterval(() => {
+-    const diff = dayjs((registration as any).OTPDateTime || Date.now()).diff(
++    const diff = dayjs(registration.OTPDateTime || Date.now() - 60 * 1000).diff(
+       Date.now(),
+       'seconds'
+     );
+@@ -34,13 +35,21 @@ const ValidatePhone = ({
+   }, 1000);
+ 
+   const generateValidationCode = async () => {
+-    const data = await Registration({
+-      merchantcode: '',
+-    })
+-      .generateValidationCode({
+-        Phone,
+-      })
+-      .toJson();
++    let data: any = null;
++
++    if (getConfig().AppType !== 'CUSTOM') {
++      data = await Registration()
++        .generateValidationCode({
++          Phone,
++        })
++        .toJson();
++    } else {
++      data = await Registration()
++        .generateValidationCode({
++          Phone,
++        })
++        .toJson();
++    }
+ 
+     if (data && data.Phone) {
+       dispatch((state) => ({
+@@ -58,14 +67,23 @@ const ValidatePhone = ({
+       return onNext();
+     }
+ 
+-    const data = await Registration({
+-      merchantcode: '',
+-    })
+-      .validatePhone({
+-        Phone,
+-        ValidationCode: values.ValidationCode,
+-      })
+-      .toJson();
++    let data: any = null;
++
++    if (getConfig().AppType !== 'CUSTOM') {
++      data = await Registration()
++        .validatePhone({
++          Phone,
++          ValidationCode: values.ValidationCode,
++        })
++        .toJson();
++    } else {
++      data = await Registration()
++        .validatePhone({
++          Phone,
++          ValidationCode: values.ValidationCode,
++        })
++        .toJson();
++    }
+ 
+     if (data && data.PhoneValidationStatus === 'VALIDATED') {
+       dispatch((state) => ({
+diff --git a/node_modules/@cloudhubapps/appcore/src/homeapp/.DS_Store b/node_modules/@cloudhubapps/appcore/src/homeapp/.DS_Store
+new file mode 100644
+index 0000000..cd8935e
+Binary files /dev/null and b/node_modules/@cloudhubapps/appcore/src/homeapp/.DS_Store differ
+diff --git a/node_modules/@cloudhubapps/appcore/src/merchantadmin/finance/accounts/accounttransactions/AccounttransactionsList.tsx b/node_modules/@cloudhubapps/appcore/src/merchantadmin/finance/accounts/accounttransactions/AccounttransactionsList.tsx
+index 890e625..bce1474 100644
+--- a/node_modules/@cloudhubapps/appcore/src/merchantadmin/finance/accounts/accounttransactions/AccounttransactionsList.tsx
++++ b/node_modules/@cloudhubapps/appcore/src/merchantadmin/finance/accounts/accounttransactions/AccounttransactionsList.tsx
+@@ -51,6 +51,7 @@ const AccounttransactionList = ({
+           borderBottomWidth: StyleSheet.hairlineWidth,
+           borderColor: colors.gray,
+         }}
++        paddingH
+       >
+         <Block flex={false} left></Block>
+         <Block
+diff --git a/node_modules/@cloudhubapps/appcore/src/utils/.DS_Store b/node_modules/@cloudhubapps/appcore/src/utils/.DS_Store
+new file mode 100644
+index 0000000..346cd88
+Binary files /dev/null and b/node_modules/@cloudhubapps/appcore/src/utils/.DS_Store differ
+diff --git a/node_modules/@cloudhubapps/appcore/src/utils/AddressFormComponent.tsx b/node_modules/@cloudhubapps/appcore/src/utils/AddressFormComponent.tsx
+index 1e1c63c..b2836c3 100644
+--- a/node_modules/@cloudhubapps/appcore/src/utils/AddressFormComponent.tsx
++++ b/node_modules/@cloudhubapps/appcore/src/utils/AddressFormComponent.tsx
+@@ -1,28 +1,45 @@
+ import React, { useState } from 'react';
+ 
+-import { Input, PhoneInput, Field } from '@expocraft/core';
+-const AddressFormComponent = () => {
+-  const [] = useState(0);
+-
++import { Input, PhoneInput, Field, FieldBlock } from '@expocraft/core';
++const AddressFormComponent = ({
++  requiredFields = ['Phone', 'Email', 'City', 'PhysicalAddress'],
++}: {
++  requiredFields: Array<
++    'Email' | 'Phone' | 'City' | 'PhysicalAddress' | 'Country' | 'PostAddress'
++  >;
++}) => {
+   return (
+     <React.Fragment>
+       <Field
+         label="Physical Address"
+         type="text"
+         name="Address.PhysicalAddress"
++        required={requiredFields.includes('PhysicalAddress')}
+         component={Input}
+       />
+-      <Field label="Email" type="text" name="Address.Email" component={Input} />
+-      <Field
+-        label="Phone"
+-        type="text"
+-        name="Address.Phone"
+-        component={PhoneInput}
+-      />
++      <FieldBlock row>
++        <Field
++          label="Email"
++          type="text"
++          name="Address.Email"
++          component={Input}
++          required={requiredFields.includes('Email')}
++          flex
++        />
++        <Field
++          label="Phone"
++          type="text"
++          name="Address.Phone"
++          component={PhoneInput}
++          required={requiredFields.includes('Phone')}
++          flex
++        />
++      </FieldBlock>
+       <Field
+         label="City/Town"
+         type="text"
+         name="Address.County"
++        required={requiredFields.includes('City')}
+         component={Input}
+       />
+     </React.Fragment>
+diff --git a/node_modules/@cloudhubapps/appcore/src/utils/PopupDialog.tsx b/node_modules/@cloudhubapps/appcore/src/utils/PopupDialog.tsx
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@cloudhubapps/appcore/src/utils/ProgressLabel.tsx b/node_modules/@cloudhubapps/appcore/src/utils/ProgressLabel.tsx
+new file mode 100644
+index 0000000..ef9affa
+--- /dev/null
++++ b/node_modules/@cloudhubapps/appcore/src/utils/ProgressLabel.tsx
+@@ -0,0 +1,32 @@
++import React from 'react';
++import { Block, Text, ProgressCircle } from '@expocraft/core';
++import { moderateScale } from '@cloudhubke/app/theme';
++import useAppTheme from '@cloudhubke/app/theme/useAppTheme';
++
++const ProgressLabel = ({ value = 0, size = 48, color }) => {
++  const { Images, sizes, colors } = useAppTheme();
++
++  return (
++    <Block center middle>
++      <Block absolute center middle>
++        <Text dark small bold style={{ color || colors.primary }} size={size / 4}>
++          {`${value}%`}
++        </Text>
++      </Block>
++
++      <ProgressCircle
++        determinate
++        size={moderateScale(size)}
++        thickness={4}
++        value={value}
++        color={color}
++        unfilledColor="#f2f2f2"
++        animationMethod="timing"
++        animationConfig={{ speed: 1 }}
++        shouldAnimateFirstValue
++      />
++    </Block>
++  );
++};
++
++export default ProgressLabel;
+diff --git a/node_modules/@cloudhubapps/appcore/src/utils/TestApp.tsx b/node_modules/@cloudhubapps/appcore/src/utils/TestApp.tsx
+deleted file mode 100644
+index 5dd0849..0000000
+--- a/node_modules/@cloudhubapps/appcore/src/utils/TestApp.tsx
++++ /dev/null
+@@ -1,12 +0,0 @@
+-import React from 'react';
+-import { Block, Text } from '@expocraft/core';
+-
+-const TestApp = (props) => {
+-  return (
+-    <Block flex={false}>
+-      <Text>Test App from MODULE</Text>
+-    </Block>
+-  );
+-};
+-
+-export default TestApp;

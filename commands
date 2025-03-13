@@ -1,0 +1,8 @@
+find ./foldername -name "*.js" -exec sh -c 'mv "$0" "${0%.js}.tsx"' {} \;
+
+
+rm -rf node_modules
+rm yarn.lock
+yarn cache clean
+yarn install
+NODE_OPTIONS="--max-old-space-size=8192" npx expo install expo@latest
