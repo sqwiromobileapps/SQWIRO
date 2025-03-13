@@ -17,12 +17,6 @@ module.exports = function extractLinkedPackages(repoDir) {
     '@expocraft/core': '/Users/bernardgaitho/@cloudhub/@expocraft/core',
     '@cloudhub-ux/graphql':
       '/Users/bernardgaitho/@cloudhub/@cloudhub-ux/cloudhub-ux-graphql',
-    '@cloudhubke/appcore':
-      '/Users/bernardgaitho/@cloudhub/@cloudhubapps/appcore/src',
-    '@cloudhubke/labfoxx':
-      '/Users/bernardgaitho/@cloudhub/@cloudhubapps/labfoxx/src',
-    '@pesapurse/ppapp':
-      '/Users/bernardgaitho/@cloudhub/webapps/mypesapurse/pesapurseapp/@ppapp',
   };
 
   const sdkRootPackage = linkedPackages['@expocraft/core'];

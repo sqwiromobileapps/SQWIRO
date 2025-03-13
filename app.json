@@ -54,14 +54,14 @@
     "runtimeVersion": "1.0.0",
     "extra": {
       "eas": {
-        "projectId": "35513441-3f4b-403c-97ce-4e5929a629c1"
+        "projectId": "4df2458b-d06a-4fbd-bd48-17a3b7971a0d"
       }
     },
     "updates": {
-      "url": "https://u.expo.dev/35513441-3f4b-403c-97ce-4e5929a629c1",
+      "url": "https://u.expo.dev/4df2458b-d06a-4fbd-bd48-17a3b7971a0d",
       "requestHeaders": {
         "expo-runtime-version": "1.0.0",
-        "expo-channel-name": "sdk48"
+        "expo-channel-name": "sdk51"
       }
     }
   }
